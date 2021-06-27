@@ -38,3 +38,7 @@ You will need to follow the ArduinoXInput library instructinos on how to upload 
 
 # Extra
 As an added bonus of using your own Arduino, you can change the name of the controller when programming the Arduino by updating the boards.txt file.
+
+# Sources 
+DaemonBite Arcade Encoder (https://github.com/MickGyver/DaemonBite-Arcade-Encoder)
+ArduinoXInput Library (https://github.com/dmadison/ArduinoXInput)
