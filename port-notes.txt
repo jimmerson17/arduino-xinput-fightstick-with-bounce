@@ -1,0 +1,23 @@
+ATmegu 32U4
+
+PB1 : Pin 15 : RB
+PB2 : Pin 16 : SELECT
+PB3 : Pin 14 : START
+PB4 : Pin 8  : LTHUMB
+PB5 : Pin 9  : RTHUMB
+PB6 : Pin 10 : RT
+
+PD0 : Pin 3  : A
+PD1 : Pin 2  : B
+PD2 : Pin 0  : X
+PD3 : Pin 1  : Y
+PD4 : Pin 4  : LB
+PD7 : Pin 6  : LT
+
+PF4 : Pin A3 : RIGHT
+PF5 : Pin A2 : LEFT
+PF6 : Pin A1 : DOWN
+PF7 : Pin A0 : UP
+
+PC6 : Pin 5 : DP/LS Switch
+
