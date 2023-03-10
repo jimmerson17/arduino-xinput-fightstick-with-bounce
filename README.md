@@ -9,6 +9,6 @@ See omgdanieltan's original code and readme for full notes.
 
 # Sources 
 DaemonBite Arcade Encoder (https://github.com/MickGyver/DaemonBite-Arcade-Encoder)  
-ArduinoXInput Library (https://github.com/dmadison/ArduinoXInput)
-OMGDanielTam's original code (https://github.com/omgdanieltam/arduino-xinput-fightstick)
+ArduinoXInput Library (https://github.com/dmadison/ArduinoXInput)  
+OMGDanielTam's original code (https://github.com/omgdanieltam/arduino-xinput-fightstick)  
 Bounce2 Library (https://github.com/thomasfredericks/Bounce2)
