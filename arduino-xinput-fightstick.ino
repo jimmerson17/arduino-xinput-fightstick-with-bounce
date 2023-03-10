@@ -1,4 +1,5 @@
 #include <XInput.h>
+#include <Bounce2.h>
 
 // Check if PIN is LOW (PRESSED)
 #define BT_START (!(PINB&(1<<3)))
@@ -19,10 +20,15 @@
 #define BT_RIGHT (!(PINF&(1<<4)))
 #define DP ((PINC&(1<<6)))
 
+Bounce2::Button bBT_UP = Bounce2::Button(); //A0
+Bounce2::Button bBT_DOWN = Bounce2::Button(); //A1
+Bounce2::Button bBT_LEFT = Bounce2::Button(); //A2
+Bounce2::Button bBT_RIGHT = Bounce2::Button(); //A3
+
 void setup() {
   // Axes
-  DDRF  &= ~B11110000; // Set A0-A3 as inputs
-  PORTF |=  B11110000; // Enable internal pull-up resistors
+  //DDRF  &= ~B11110000; // Set A0-A3 as inputs
+  //PORTF |=  B11110000; // Enable internal pull-up resistors
 
   // Buttons
   DDRD  &= ~B10011111; // Set PD0-PD4 and PD7 as inputs
@@ -34,13 +40,31 @@ void setup() {
   DDRC  &= ~B01000000; // Set Pin 5 as input
   PORTC |=  B01000000; // Enable internal pull-up resistor
 
+  
+  bBT_UP = configBounce(bBT_UP, A0);
+  bBT_DOWN = configBounce(bBT_DOWN, A1);
+  bBT_LEFT = configBounce(bBT_LEFT, A2);
+  bBT_RIGHT = configBounce(bBT_RIGHT, A3);
+
   XInput.setAutoSend(false);
 
   XInput.begin();
 
 }
 
+Bounce2::Button configBounce(Bounce2::Button b, uint8_t pin)
+{
+  b.attach(pin, INPUT_PULLUP);
+  b.interval(10);
+  //b.setPressedState(LOW);
+  return b;
+}
+
 void loop() {
+  bBT_UP.update();
+  bBT_DOWN.update();
+  bBT_LEFT.update();
+  bBT_RIGHT.update();
   // Set buttons
   XInput.setButton( BUTTON_A, BT_A );
   XInput.setButton( BUTTON_B, BT_B );
@@ -55,14 +79,25 @@ void loop() {
   XInput.setButton( TRIGGER_LEFT, BT_LT );
   XInput.setButton( TRIGGER_RIGHT, BT_RT );
 
-  if(DP) { // if set to D-pad
-    XInput.setDpad(BT_UP, BT_DOWN, BT_LEFT, BT_RIGHT);
-    XInput.setJoystick(JOY_LEFT, 0, 0);
+  if (bBT_UP.changed() ||
+  bBT_DOWN.changed() ||
+  bBT_LEFT.changed() ||
+  bBT_RIGHT.changed())
+  {
+    /*if(DP) { // if set to D-pad
+      //XInput.setDpad(BT_UP, BT_DOWN, BT_LEFT, BT_RIGHT);
+      XInput.setDpad(bBT_UP.read(), bBT_DOWN.read(), bBT_LEFT.read(), bBT_RIGHT.read());
+      XInput.setJoystick(JOY_LEFT, 0, 0);
+    }
+    else {
+      //XInput.setJoystick(JOY_LEFT, BT_UP, BT_DOWN, BT_LEFT, BT_RIGHT);
+      */
+      //XInput.setJoystick(JOY_LEFT, bBT_UP.read(), bBT_DOWN.read(), bBT_LEFT.read(), bBT_RIGHT.read());
+      XInput.setJoystick(JOY_LEFT, BT_UP, BT_DOWN, BT_LEFT, BT_RIGHT);
+      XInput.setDpad(0, 0, 0, 0);
+    //}
   }
-  else {
-    XInput.setJoystick(JOY_LEFT, BT_UP, BT_DOWN, BT_LEFT, BT_RIGHT);
-    XInput.setDpad(0, 0, 0, 0);
-  }
+
 
   // Send out
   XInput.send();
